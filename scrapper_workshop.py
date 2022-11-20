@@ -70,5 +70,14 @@ def shearch_mod(query):
     download_whole_workshop(url)
 
 if __name__ == '__main__':
-    url = "https://steamcommunity.com/workshop/browse/?appid=383980&searchtext=meta+knight&childpublishedfileid=0&browsesort=textsearch&section="
-    download_whole_workshop(url)
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("url", help="url of the mod", default=None, nargs='?')
+    parser.add_argument("-f", "--file", help="file with urls of the mods")
+    args = parser.parse_args()
+    if args.file:
+        with open(args.file, 'r') as f:
+            for line in f.readlines():
+                get_mod(line)
+    else:
+        get_mod(args.url)
